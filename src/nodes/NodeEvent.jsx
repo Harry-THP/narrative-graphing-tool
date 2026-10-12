@@ -1,16 +1,24 @@
-import { useCallback } from 'react';
 import { Position, Handle } from '@xyflow/react';
 
-function EventNode(props) {
-  const onChange = useCallback((evt) => {
-    console.log(evt.target.value);
-  }, []);
+function EventNode({ data }) {
+  const description = data?.description?.trim();
+  const severity = Number.isFinite(data?.severity)
+    ? data.severity
+    : 0;
 
   return (
-    <div className="event-node">
+    <div
+      className="event-node"
+      title={[
+        'Event',
+        `Description: ${description || 'Not set'}`,
+        `Severity: ${severity.toFixed(1)}`,
+      ].join('\n')}
+    >
       <div style={{ background: 'none', fontSize: 25 }}>
-        <label htmlFor="text">ζ</label>
+        <label>ζ</label>
       </div>
+
       <Handle
         position={Position.Right}
         style={{
@@ -20,7 +28,7 @@ function EventNode(props) {
           height: '30%',
           transform: 'translateY(-30%) translateX(-5%)',
         }}
-      ></Handle>
+      />
     </div>
   );
 }
